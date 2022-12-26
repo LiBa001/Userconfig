@@ -1,0 +1,18 @@
+# BEGIN_KITTY_THEME
+# Afterglow
+include current-theme.conf
+# END_KITTY_THEME
+
+shell zsh
+editor hx
+
+# font
+font_family Liberation Mono
+
+# tab bar
+tab_bar_edge top
+tab_bar_style powerline
+
+# color scheme
+foreground orange
+background_opacity 0.8
