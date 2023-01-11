@@ -1,0 +1,46 @@
+[Unit]
+Description=Mount upspin directory forest via FUSE (upspinfs)
+Documentation=http://upspin.io/docs/
+After=network-online.target
+
+
+[Service]
+Type=simple
+
+# Set up environment defaults
+Environment=MOUNT_DIR="%h/upspin/mnt"
+Environment=UPSPIN_CONF="%h/upspin/config"
+Environment=UPSPIN_BIN_DIR="/usr/bin/upspin"
+Environment=POST_MOUNT_SCRIPT=""
+
+# Override default environment
+EnvironmentFile=%h/.config/upspin/upspin.env
+
+# Check upspinfs binary
+ExecStartPre=/usr/bin/test -x "${UPSPIN_BIN_DIR}/upspinfs"
+
+# Check the mount directory
+ExecStartPre=/usr/bin/test -d "${MOUNT_DIR}"
+ExecStartPre=/usr/bin/test -w "${MOUNT_DIR}"
+# TODO: Add test for MOUNT_DIR being empty -> ExecStartPre=/usr/bin/test -z "$(ls -A "${MOUNT_DIR}")"
+
+# Check the upspin configuration file
+ExecStartPre=/usr/bin/test -f "${UPSPIN_CONF}"
+ExecStartPre=/usr/bin/test -r "${UPSPIN_CONF}"
+
+# Mount upspin fs
+ExecStart=/bin/bash -c '${UPSPIN_BIN_DIR}/upspinfs -config="${UPSPIN_CONF}" $MOUNT_DIR'
+
+#Execute Post Mount Script if specified
+ExecStartPost=/bin/sh -c "${POST_MOUNT_SCRIPT}"
+
+#Unmount upspin fs
+ExecStop=/bin/fusermount -u "${MOUNT_DIR}"
+
+#Restart info
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target
+

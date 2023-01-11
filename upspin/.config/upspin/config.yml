@@ -1,0 +1,8 @@
+
+keyserver: remote,key.upspin.io:443
+
+username: linus@libasoft.de
+storeserver: remote,upspin.libasoft.de:443
+dirserver: remote,upspin.libasoft.de:443
+packing: ee
+

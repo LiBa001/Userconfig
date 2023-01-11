@@ -48,6 +48,11 @@ if [[ $TERM == "xterm-kitty" ]]; then
 	alias icat="kitty +kitten icat" # display images in terminal
 fi
 
+# upspin
+UPSPIN_CONFIG="$HOME/.config/upspin/config.yml"
+alias upspin="upspin -config=$UPSPIN_CONFIG"
+alias upspinfs="upspinfs -config=$UPSPIN_CONFIG"
+
 
 # OS specific
 case "$(uname -s)" in
