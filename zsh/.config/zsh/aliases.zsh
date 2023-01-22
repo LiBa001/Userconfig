@@ -48,6 +48,17 @@ if [[ $TERM == "xterm-kitty" ]]; then
 	alias icat="kitty +kitten icat" # display images in terminal
 fi
 
+# use bat to colorize cat and man (for theming see BAT_THEME in exports config)
+if command -v bat &> /dev/null; then
+  alias cat="bat -pp"  # plain output with only highlighting
+  alias catt="bat"     # stylized output with paging
+  
+	function batman() {
+		/bin/man $@ | bat -p -l man  # display manpage with highlighting
+	}
+	alias man=batman
+fi
+
 # upspin
 UPSPIN_CONFIG="$HOME/.config/upspin/config.yml"
 alias upspin="upspin -config=$UPSPIN_CONFIG"
